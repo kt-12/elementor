@@ -127,6 +127,7 @@ const entry = {
 	'ai-admin': path.resolve( __dirname, '../modules/ai/assets/js/admin/index.js' ),
 	'styleguide': path.resolve( __dirname, '../modules/styleguide/assets/js/styleguide.js' ),
 	'styleguide-app-initiator': path.resolve( __dirname, '../modules/styleguide/assets/js/styleguide-app-initiator.js' ),
+	'image-loading-optimization': path.resolve( __dirname, '../modules/image-loading-optimization/assets/js/editor/module.js' ),
 };
 
 const frontendEntries = {
@@ -139,6 +140,7 @@ const externals = {
 	'@wordpress/i18n': 'wp.i18n',
 	react: 'React',
 	'react-dom': 'ReactDOM',
+	'web-vitals': 'WebVitals',
 	'@elementor/app-ui': 'elementorAppPackages.appUi',
 	'@elementor/components': 'elementorAppPackages.components',
 	'@elementor/hooks': 'elementorAppPackages.hooks',
@@ -152,6 +154,7 @@ const plugins = [
 	new webpack.ProvidePlugin( {
 		React: 'react',
 		ReactDOM: 'react-dom',
+		WebVitals: 'web-vitals',
 		PropTypes: 'prop-types',
 		__: ['@wordpress/i18n', '__'],
 		sprintf: ['@wordpress/i18n', 'sprintf'],
