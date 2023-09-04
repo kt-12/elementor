@@ -37,6 +37,7 @@ const common = {
 				{ request: /^@wordpress\/(.+)$/, handle: 'wp-$1' },
 				{ request: 'react', handle: 'react' },
 				{ request: 'react-dom', handle: 'react-dom' },
+				{ request: 'web-vitals', global: 'WebVitals' },
 			]
 		} ),
 		new ExternalizeWordPressAssetsWebpackPlugin( {
@@ -46,6 +47,7 @@ const common = {
 				{ request: /^@wordpress\/(.+)$/, global: [ 'wp', '$1' ] },
 				{ request: 'react', global: 'React' },
 				{ request: 'react-dom', global: 'ReactDOM' },
+				{ request: 'web-vitals', global: 'WebVitals' },
 			]
 		} ),
 	],
