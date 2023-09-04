@@ -74,7 +74,10 @@ class Module extends BaseModule {
 		add_action( 'get_footer', [ $this, 'set_buffer' ] );
 
 		// Enqueue module script.
-		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
+
+		// Enqueue module preview script.
+		add_action( 'elementor/preview/enqueue_scripts', [ $this, 'enqueue_preview_scripts' ] );
 	}
 
 	/**
@@ -341,15 +344,30 @@ class Module extends BaseModule {
 	}
 
 	/**
-	 * Enqueue the module scripts.
+	 * Enqueue the module editor scripts.
 	 *
 	 * @return void
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_editor_scripts() {
 		wp_enqueue_script(
-			$this->get_name(),
-			$this->get_js_assets_url( $this->get_name() ),
+			$this->get_name() . '-editor',
+			$this->get_js_assets_url( $this->get_name() . '-editor' ),
 			[ 'elementor-editor' ],
+			ELEMENTOR_VERSION,
+			true
+		);
+	}
+
+	/**
+	 * Enqueue the module preview scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueue_preview_scripts() {
+		wp_enqueue_script(
+			$this->get_name() . '-preview',
+			$this->get_js_assets_url( $this->get_name() . '-preview' ),
+			[ 'elementor-frontend-modules' ],
 			ELEMENTOR_VERSION,
 			true
 		);

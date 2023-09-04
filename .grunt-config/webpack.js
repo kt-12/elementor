@@ -127,7 +127,8 @@ const entry = {
 	'ai-admin': path.resolve( __dirname, '../modules/ai/assets/js/admin/index.js' ),
 	'styleguide': path.resolve( __dirname, '../modules/styleguide/assets/js/styleguide.js' ),
 	'styleguide-app-initiator': path.resolve( __dirname, '../modules/styleguide/assets/js/styleguide-app-initiator.js' ),
-	'image-loading-optimization': path.resolve( __dirname, '../modules/image-loading-optimization/assets/js/editor/module.js' ),
+	'image-loading-optimization-editor': path.resolve( __dirname, '../modules/image-loading-optimization/assets/js/editor/module.js' ),
+	'image-loading-optimization-preview': path.resolve( __dirname, '../modules/image-loading-optimization/assets/js/preview/index.js' ),
 };
 
 const frontendEntries = {
