@@ -141,7 +141,6 @@ const externals = {
 	'@wordpress/i18n': 'wp.i18n',
 	react: 'React',
 	'react-dom': 'ReactDOM',
-	'web-vitals': 'WebVitals',
 	'@elementor/app-ui': 'elementorAppPackages.appUi',
 	'@elementor/components': 'elementorAppPackages.components',
 	'@elementor/hooks': 'elementorAppPackages.hooks',

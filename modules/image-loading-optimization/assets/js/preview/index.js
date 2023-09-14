@@ -1,4 +1,4 @@
-import { onLCP } from './web-vitals';
+import { onLCP } from 'web-vitals';
 
 class WebVitalsChecker extends elementorModules.ViewModule {
     lcp = null;
