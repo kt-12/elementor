@@ -352,9 +352,11 @@ class Module extends BaseModule {
 		wp_enqueue_script(
 			$this->get_name() . '-editor',
 			$this->get_js_assets_url( $this->get_name() . '-editor' ),
-			[ 'elementor-editor' ],
+			[ 'elementor-common', 'elementor-editor-modules' ],
 			ELEMENTOR_VERSION,
-			true
+			array(
+				'strategy'  => 'defer',
+			)
 		);
 	}
 
@@ -367,9 +369,11 @@ class Module extends BaseModule {
 		wp_enqueue_script(
 			$this->get_name() . '-preview',
 			$this->get_js_assets_url( $this->get_name() . '-preview' ),
-			[ 'elementor-frontend-modules' ],
+			[],
 			ELEMENTOR_VERSION,
-			true
+			array(
+				'strategy'  => 'defer',
+			)
 		);
 	}
 }
