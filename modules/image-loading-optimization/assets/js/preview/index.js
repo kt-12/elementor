@@ -1,85 +1,86 @@
 import { onLCP } from 'web-vitals';
 
 class WebVitalsChecker extends elementorModules.ViewModule {
-    lcp = null;
-    
-    /**
-     * Initialize the Preview module.
-     *
-     * @return {void}
-     */
-     onInit() {
-        super.onInit();
-        this.editorMessageListener();
-        onLCP(this.captureLCP.bind(this));
-    }
+	lcp = null;
 
-    /**
-     * Listen to messages from the Editor.
-     * 
-     * @return {void}
-     */
-    editorMessageListener() {
-        window.addEventListener( 'message', ( event ) => {
-            if (event.data?.name && event.data?.name == 'elementor/web-vitals/preview') {
-                this.sendWebVitalsToEditor( event.data?.device );
-            }
-        } );
-    }
+	/**
+	 * Initialize the Preview module.
+	 *
+	 * @return {void}
+	 */
+	onInit() {
+		super.onInit();
+		this.editorMessageListener();
+		onLCP( this.captureLCP.bind( this ) );
+	}
 
-    /**
-     * Send the LCP data to the Editor.
-     *
-     * @param {string} device
-     * @return {void}
-     */
-    sendWebVitalsToEditor( device ) {
-        window.parent.postMessage({
-            name: 'elementor/web-vitals/editor',            
-            device: device, 
-            lcp: this.lcp
-        }, '*');
-    }
+	/**
+	 * Listen to messages from the Editor.
+	 *
+	 * @return {void}
+	 */
+	editorMessageListener() {
+		window.addEventListener( 'message', ( event ) => {
+			if ( event.data?.name && 'elementor/web-vitals/preview' == event.data?.name ) {
+				this.sendWebVitalsToEditor( event.data?.device );
+			}
+		} );
+	}
 
-    /**
-     * Capture LCP data.
-     * 
-     * @param {object} report
-     * @return {void}
-     */
-    captureLCP( report ) {
-        let entries = report.entries.map((entry) => {
-            const { element, url } = entry;
-            const widget = this.getParentWidget( element );
-            return {
-                url,
-                id: element?.id,
-                className: element?.className,
-                nodeName: element?.nodeName,
-                width: element?.clientWidth,
-                height: element?.clientHeight,
-                widgetId: widget?.getAttribute('data-id'),
-            };
-        });
-        report.entries = entries;
-        this.lcp = report;
-    }
+	/**
+	 * Send the LCP data to the Editor.
+	 *
+	 * @param {string} device
+	 * @return {void}
+	 */
+	sendWebVitalsToEditor( device ) {
+		window.parent.postMessage( {
+			name: 'elementor/web-vitals/editor',
+			device,
+			lcp: this.lcp,
+		}, '*' );
+	}
 
-    /**
-     * Get parent widget element of an element.
-     *
-     * @param {string} device
-     * @return {object} widget element
-     */
-    getParentWidget( element ) {
-        while (element) {
-            if (element.getAttribute && element.getAttribute("data-element_type") === "widget") {
-                return element;
-            }
-            element = element.parentElement;
-        }
-        return null;
-    }
+	/**
+	 * Capture LCP data.
+	 *
+	 * @param {Object} report
+	 * @return {void}
+	 */
+	captureLCP( report ) {
+		const entries = report.entries.map( ( entry ) => {
+			const { element, url } = entry;
+			const widget = this.getParentWidget( element );
+			return {
+				url,
+				id: element?.id,
+				className: element?.className,
+				nodeName: element?.nodeName,
+				width: element?.clientWidth,
+				height: element?.clientHeight,
+				widgetId: widget?.getAttribute( 'data-id' ),
+			};
+		} );
+		report.entries = entries;
+		this.lcp = report;
+	}
+
+	/**
+	 * Get parent widget element of an element.
+	 *
+	 * @param {string} device
+	 * @param          element
+	 * @return {Object} widget element
+	 */
+	getParentWidget( element ) {
+		while ( element ) {
+			if ( element.getAttribute && 'widget' === element.getAttribute( 'data-element_type' ) ) {
+				return element;
+			}
+			element = element.parentElement;
+		}
+		return null;
+	}
 }
 
 document.addEventListener( 'DOMContentLoaded', () => new WebVitalsChecker() );
