@@ -78,6 +78,12 @@ class Module extends BaseModule {
 
 		// Run optimization logic on footer. Flushing of footer buffer will be handled by PHP script end default logic.
 		add_action( 'get_footer', [ $this, 'set_buffer' ] );
+
+		// Enqueue module script.
+		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
+
+		// Enqueue module preview script.
+		add_action( 'elementor/preview/enqueue_scripts', [ $this, 'enqueue_preview_scripts' ] );
 	}
 
 	/**
@@ -374,5 +380,39 @@ class Module extends BaseModule {
 		}
 
 		return $high_priority_element;
+	}
+
+	/**
+	 * Enqueue the module editor scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueue_editor_scripts() {
+		wp_enqueue_script(
+			$this->get_name() . '-editor',
+			$this->get_js_assets_url( $this->get_name() . '-editor' ),
+			[ 'elementor-common', 'elementor-editor-modules' ],
+			ELEMENTOR_VERSION,
+			array(
+				'strategy'  => 'defer',
+			)
+		);
+	}
+
+	/**
+	 * Enqueue the module preview scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueue_preview_scripts() {
+		wp_enqueue_script(
+			$this->get_name() . '-preview',
+			$this->get_js_assets_url( $this->get_name() . '-preview' ),
+			[],
+			ELEMENTOR_VERSION,
+			array(
+				'strategy'  => 'defer',
+			)
+		);
 	}
 }
